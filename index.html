@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Motivational Flipbook</title>
 <style>
+  :root{
+    --flip-delay: 5000ms;   /* time each page stays visible */
+    --start-delay: 1500ms;  /* delay before first flip */
+    --restart-delay: 1200ms;/* delay before restart after reset */
+    --flip-duration: 1200ms;/* page flip animation time */
+  }
+
+  * { box-sizing: border-box; }
+
   body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100svh; /* better on mobile browsers */
     background: linear-gradient(135deg, #a8edea, #fed6e3);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
     margin: 0;
   }
 
   #flipbook {
-    width: 90vw;
-    max-width: 450px;
-    height: 75vh;
-    max-height: 650px;
+    width: 92vw;
+    max-width: 360px;   /* smaller to fit fully on phones */
+    height: 62vh;
+    max-height: 520px;
     perspective: 2000px;
     position: relative;
   }
@@ -28,67 +37,131 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
-    color: #fff;
+    inset: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    font-size: clamp(20px, 5vw, 28px); /* larger font */
+    justify-content: flex-start; /* image at top */
+    padding: 14px 16px;
     text-align: center;
-    padding: 25px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.28);
     transform-origin: left center;
     backface-visibility: hidden;
-    transition: transform 1.5s ease;
-    border-radius: 15px;
+    transition: transform var(--flip-duration) ease;
+    /* Text defaults */
+    color: #fff;
   }
 
-  .flipped {
-    transform: rotateY(-180deg);
+  .page .card-img {
+    width: 90%;
+    max-height: 38%;
+    aspect-ratio: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    margin: 8px 0 12px;
   }
 
-  /* Different colors for each card */
-  .page:nth-child(1) { background: #ff6b6b; }
-  .page:nth-child(2) { background: #4ecdc4; }
-  .page:nth-child(3) { background: #1a535c; }
-  .page:nth-child(4) { background: #ff9f1c; }
-  .page:nth-child(5) { background: #2ec4b6; }
-  .page:nth-child(6) { background: #5a189a; }
-  .page:nth-child(7) { background: #ef476f; }
-  .page:nth-child(8) { background: #06d6a0; }
-  .page:nth-child(9) { background: #118ab2; }
-  .page:nth-child(10) { background: #073b4c; }
-  .page:nth-child(11) { background: #f3722c; }
-  .page:nth-child(12) { background: #90be6d; }
-  .page:nth-child(13) { background: #577590; }
-  .page:nth-child(14) { background: #8338ec; }
+  .page p {
+    margin: 0;
+    font-weight: 800; /* bold */
+    line-height: 1.35;
+    letter-spacing: 0.2px;
+    font-size: clamp(22px, 6.2vw, 34px); /* big & responsive */
+  }
+
+  .flipped { transform: rotateY(-180deg); }
+
+  /* Different background colors for each card */
+  .page:nth-child(1)  { background:#ff6b6b; }
+  .page:nth-child(2)  { background:#4ecdc4; }
+  .page:nth-child(3)  { background:#1a535c; }
+  .page:nth-child(4)  { background:#ff9f1c; }
+  .page:nth-child(5)  { background:#2ec4b6; }
+  .page:nth-child(6)  { background:#5a189a; }
+  .page:nth-child(7)  { background:#ef476f; }
+  .page:nth-child(8)  { background:#06d6a0; }
+  .page:nth-child(9)  { background:#118ab2; }
+  .page:nth-child(10) { background:#073b4c; }
+  .page:nth-child(11) { background:#f3722c; }
+  .page:nth-child(12) { background:#90be6d; }
+  .page:nth-child(13) { background:#577590; }
+  .page:nth-child(14) { background:#8338ec; }
+
+  /* Tiny-device tweaks */
+  @media (max-width: 360px), (max-height: 620px) {
+    #flipbook { max-width: 335px; height: 58vh; }
+    .page .card-img { max-height: 36%; }
+  }
 </style>
 </head>
 <body>
 
 <div id="flipbook">
-  <div class="page">Great things never come from comfortable zones, step out and grow stronger.</div>
-  <div class="page">Strength does not come from winning, it comes from fighting through struggles.</div>
-  <div class="page">Your mindset is your greatest weapon, protect it and use it wisely.</div>
-  <div class="page">The key to success is starting before you feel ready.</div>
-  <div class="page">Patience and hard work can turn the impossible into possible.</div>
-  <div class="page">The future belongs to those who never stop trying, no matter how many times they fail.</div>
-  <div class="page">Do not be afraid of slow growth, be afraid of standing still.</div>
-  <div class="page">Every failure is a lesson in disguise, teaching you the way to succeed.</div>
-  <div class="page">Believe in yourself, even if no one else does! This belief will guide you to greatness!</div>
-  <div class="page">Do not give up, the beginning is always the hardest but the ending is worth it.</div>
-  <div class="page">Small progress each day adds up to big results over time.</div>
-  <div class="page">Dream Big, start Small, but never stop moving forward!</div>
-  <div class="page">Your hardest struggles today will become your greatest strength tomorrow.</div>
-  <div class="page">Success is not about speed, it's about consistency every single day.</div>
+  <div class="page">
+    <img src="https://i.imgur.com/RjOihnl.jpeg" alt="Motivation 1" class="card-img" />
+    <p>Great things never come from comfortable zones, step out and grow stronger.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/TGugMXy.jpeg" alt="Motivation 2" class="card-img" />
+    <p>Strength does not come from winning, it comes from fighting through struggles.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/x8ABc91.jpeg" alt="Motivation 3" class="card-img" />
+    <p>Your mindset is your greatest weapon, protect it and use it wisely.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/S5oOR5V.jpeg" alt="Motivation 4" class="card-img" />
+    <p>The key to success is starting before you feel ready.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/8qBJVxX.jpeg" alt="Motivation 5" class="card-img" />
+    <p>Patience and hard work can turn the impossible into possible.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/PMeXwMs.jpeg" alt="Motivation 6" class="card-img" />
+    <p>The future belongs to those who never stop trying, no matter how many times they fail.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/HRT4fbj.jpeg" alt="Motivation 7" class="card-img" />
+    <p>Do not be afraid of slow growth, be afraid of standing still.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/SP4cuS7.jpeg" alt="Motivation 8" class="card-img" />
+    <p>Every failure is a lesson in disguise, teaching you the way to succeed.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/oSHZs1q.jpeg" alt="Motivation 9" class="card-img" />
+    <p>Believe in yourself, even if no one else does! This belief will guide you to greatness!</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/5QjYL70.jpeg" alt="Motivation 10" class="card-img" />
+    <p>Do not give up, the beginning is always the hardest but the ending is worth it.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/c81NWpS.jpeg" alt="Motivation 11" class="card-img" />
+    <p>Small progress each day adds up to big results over time.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/KjU8mVT.jpeg" alt="Motivation 12" class="card-img" />
+    <p>Dream Big, start Small, but never stop moving forward!</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/2dGwDWY.jpeg" alt="Motivation 13" class="card-img" />
+    <p>Your hardest struggles today will become your greatest strength tomorrow.</p>
+  </div>
+  <div class="page">
+    <img src="https://i.imgur.com/5vtXDVr.jpeg" alt="Motivation 14" class="card-img" />
+    <p>Success is not about speed, it's about consistency every single day.</p>
+  </div>
 </div>
 
 <script>
   const pages = document.querySelectorAll('#flipbook .page');
   let current = 0;
 
-  // Stack pages correctly
+  // Stack pages so the first page is on top
   pages.forEach((page, i) => {
     page.style.zIndex = pages.length - i;
   });
@@ -97,19 +170,19 @@
     if (current < pages.length) {
       pages[current].classList.add('flipped');
       current++;
-      setTimeout(flipNext, 5000); // 5s per card
+      setTimeout(flipNext, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--flip-delay')));
     } else {
-      // Restart after short delay
+      // Reset and restart
       setTimeout(() => {
         pages.forEach(p => p.classList.remove('flipped'));
         current = 0;
-        setTimeout(flipNext, 2000); // restart after 2s
-      }, 4000);
+        setTimeout(flipNext, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--restart-delay')));
+      }, 1000);
     }
   }
 
   window.onload = () => {
-    setTimeout(flipNext, 2000); // wait before first flip
+    setTimeout(flipNext, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--start-delay')));
   };
 </script>
 
