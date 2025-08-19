@@ -17,9 +17,9 @@
 
   #flipbook {
     width: 90vw;
-    max-width: 400px;
-    height: 70vh;
-    max-height: 600px;
+    max-width: 450px;
+    height: 75vh;
+    max-height: 650px;
     perspective: 2000px;
     position: relative;
   }
@@ -30,23 +30,39 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: white;
+    color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: clamp(16px, 4vw, 22px);
+    font-size: clamp(20px, 5vw, 28px); /* larger font */
     text-align: center;
-    padding: 20px;
+    padding: 25px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     transform-origin: left center;
     backface-visibility: hidden;
-    transition: transform 2s ease;
-    border-radius: 10px;
+    transition: transform 1.5s ease;
+    border-radius: 15px;
   }
 
   .flipped {
     transform: rotateY(-180deg);
   }
+
+  /* Different colors for each card */
+  .page:nth-child(1) { background: #ff6b6b; }
+  .page:nth-child(2) { background: #4ecdc4; }
+  .page:nth-child(3) { background: #1a535c; }
+  .page:nth-child(4) { background: #ff9f1c; }
+  .page:nth-child(5) { background: #2ec4b6; }
+  .page:nth-child(6) { background: #5a189a; }
+  .page:nth-child(7) { background: #ef476f; }
+  .page:nth-child(8) { background: #06d6a0; }
+  .page:nth-child(9) { background: #118ab2; }
+  .page:nth-child(10) { background: #073b4c; }
+  .page:nth-child(11) { background: #f3722c; }
+  .page:nth-child(12) { background: #90be6d; }
+  .page:nth-child(13) { background: #577590; }
+  .page:nth-child(14) { background: #8338ec; }
 </style>
 </head>
 <body>
@@ -72,7 +88,7 @@
   const pages = document.querySelectorAll('#flipbook .page');
   let current = 0;
 
-  // Stack pages correctly (last one at the back)
+  // Stack pages correctly
   pages.forEach((page, i) => {
     page.style.zIndex = pages.length - i;
   });
@@ -81,12 +97,19 @@
     if (current < pages.length) {
       pages[current].classList.add('flipped');
       current++;
-      setTimeout(flipNext, 5000); // wait 5s per page
+      setTimeout(flipNext, 5000); // 5s per card
+    } else {
+      // Restart after short delay
+      setTimeout(() => {
+        pages.forEach(p => p.classList.remove('flipped'));
+        current = 0;
+        setTimeout(flipNext, 2000); // restart after 2s
+      }, 4000);
     }
   }
 
   window.onload = () => {
-    setTimeout(flipNext, 2000); // wait 2s before first flip
+    setTimeout(flipNext, 2000); // wait before first flip
   };
 </script>
 
