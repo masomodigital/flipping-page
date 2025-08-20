@@ -41,6 +41,7 @@
     background: linear-gradient(135deg, #a8edea, #fed6e3);
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
     margin: 0;
+    position: relative; /* needed for button positioning */
   }
 
   #flipbook {
@@ -110,6 +111,23 @@
     #flipbook { max-width: 335px; height: 58vh; }
     .page .card-img { width: 100%; height: auto; }
   }
+
+  /* Button style */
+  #end-button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 16px 32px;
+    background: #28a745; /* green */
+    color: #fff;
+    font-weight: 800;
+    font-size: 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    z-index: 999;
+  }
 </style>
 </head>
 <body>
@@ -173,6 +191,9 @@
   </div>
 </div>
 
+<!-- Button floating on background -->
+<a id="end-button" href="https://cutt.ly/masomoapp" target="_blank">CLICK HERE FOR MORE</a>
+
 <script>
   const pages = document.querySelectorAll('#flipbook .page');
   let current = 0;
@@ -187,11 +208,17 @@
       current++;
       setTimeout(flipNext, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--flip-delay')));
     } else {
+      // Show the button on background
+      const btn = document.getElementById('end-button');
+      btn.style.display = 'block';
+
+      // Reset after some time
       setTimeout(() => {
         pages.forEach(p => p.classList.remove('flipped'));
         current = 0;
+        btn.style.display = 'none';
         setTimeout(flipNext, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--restart-delay')));
-      }, 1000);
+      }, 5000);
     }
   }
 
